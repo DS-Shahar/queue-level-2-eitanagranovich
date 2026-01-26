@@ -247,4 +247,26 @@ public class Main {
 		retutn true;
 	}
 
+
+
+
+    public static int countNodes(BinNode<Integer> node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + countNodes(node.getLeft()) + countNodes(node.getRight());
+    }
+
+
+	public static boolean printPositiveNoEvenChildren2(BinNode<Integer> node)
+		int num = printPositiveNoEvenChildren1(node, 0);
+		int numOfItems = countNodes(node);
+
+		if(num == numOfItems){
+			return true;
+		}
+			retutn false;
+		}
+
+
 }
