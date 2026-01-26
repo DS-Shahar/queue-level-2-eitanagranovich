@@ -195,4 +195,56 @@ public class Main {
     }
 
 
+
+
+
+	    public static void printPositiveNoEvenChildren(BinNode<Integer> node) {
+        if (node == null) {
+            return;
+        }
+
+        
+        if (node.getValue() > 0) {
+            
+            boolean leftIsEven = (node.hasLeft() && node.getLeft().getValue() % 2 == 0);
+            boolean rightIsEven = (node.hasRight() && node.getRight().getValue() % 2 == 0);
+
+            if (!leftIsEven && !rightIsEven && node.getValue() % 2 == 0) {
+                System.out.println(node.getValue());
+            }
+        }
+        printPositiveNoEvenChildren(node.getLeft());
+        printPositiveNoEvenChildren(node.getRight());
+    }
+
+
+
+		public static int printPositiveNoEvenChildren1(BinNode<Integer> node, count) {
+        if (node == null) {
+            return;
+        }
+
+        
+        if (node.getValue() > 0) {
+            
+            boolean leftIsEven = (node.hasLeft() && node.getLeft().getValue() % 2 == 0);
+            boolean rightIsEven = (node.hasRight() && node.getRight().getValue() % 2 == 0);
+
+            if (!leftIsEven && !rightIsEven && node.getValue() % 2 == 0) {
+                count = count + 1;
+            }
+        }
+        printPositiveNoEvenChildren1(node.getLeft(), count);
+        printPositiveNoEvenChildren1(node.getRight(), count);
+    }
+
+
+	public static boolean printPositiveNoEvenChildren2(BinNode<Integer> node)
+		int num = printPositiveNoEvenChildren1(node, 0);
+		if(num == 0){
+			return false;
+		}
+		retutn true;
+	}
+
 }
