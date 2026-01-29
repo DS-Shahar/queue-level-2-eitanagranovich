@@ -274,4 +274,27 @@ public class Main {
         } 
         return num + countNodes(node.getLeft()) + countNodes(node.getRight());
     }
+    
+        public static int count_bintTree(BinNode<Integer> node, int count){
+            if (node == null) {
+                return 0;
+            }
+            int num = 0;
+            if (node.hasRight()){
+                if (!node.hasLeft()){ 
+                    num = 1;
+                }    
+            } 
+            return num + countNodes(node.getLeft()) + countNodes(node.getRight());
+        }
+        
+        public static boolean count_bintTree_help(BinNode<Integer> node){
+            int num = count_bintTree(node, 0);
+            if(num == 0){
+                return true;
+            }
+            return false;
+        }
+                
+        
 }
