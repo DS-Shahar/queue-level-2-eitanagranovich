@@ -1,254 +1,242 @@
-
 import java.util.*;
+
 public class Main {
 
-	static Scanner reader = new Scanner(System.in);
-	public static void main(String[] args) {
-		Queue<String> q = new Queue<>();
-		q.insert("c");
-		q.insert("c");
-		q.insert("a");
-		q.insert("c");
+    static Scanner reader = new Scanner(System.in);
 
-		Queue<Integer> q1 = new Queue<>();
-		q1.insert(11);
-		q1.insert(33);
-		q1.insert(2);
-		q1.insert(33);
-		Queue<Integer> q1Copy = copyQueueInt(q1);
+    public static void main(String[] args) {
 
-		System.out.println("ex1:");
-		Queue<Integer> ex1Q = ex1(q);
-		System.out.println(ex1Q.toString());
-		System.out.println("ex2:" + ex2(q));
-		System.out.println("ex3:" + ex3(q1Copy));
-		q1Copy = copyQueueInt(q1);
-		System.out.println("ex4:" + ex4(q1Copy));
-        System.out.println("max:" + findMax(q1));
-        System.out.println("num of digits:" + numOfDigits(4567));
-        System.out.println("num of place(ex3):" + placeOfNum(1234, 0));
-		
-	}
+        Queue<String> q = new LinkedList<>();
+        q.add("c");
+        q.add("c");
+        q.add("a");
+        q.add("c");
 
-	public static Queue<Integer> ex1(Queue<String> q) {
-		Queue<String> qCopy = copyQueueStr(q);
-		Queue<Integer> c = new Queue<>();
-		int count = 1;
-		String current;
-		String prev = null;
+        Queue<Integer> q1 = new LinkedList<>();
+        q1.add(11);
+        q1.add(33);
+        q1.add(2);
+        q1.add(33);
 
-		while (!qCopy.isEmpty()) {
-			current = qCopy.remove();
-			if (current.equals(prev)) {
-				count++;
-			} else {
-				if (prev != null) {
-					c.insert(count);
-				}
-				count = 1;
-			}
-			prev = current;
-		}
-		c.insert(count);
+        Queue<Integer> q1Copy = copyQueueInt(q1);
 
-		return c;
-	}
+        System.out.println("ex1:");
+        System.out.println(ex1(q));
 
+        System.out.println("ex2:");
+        System.out.println(ex2(q));
 
-	public static boolean ex2(Queue<String> q) {
-		Queue<String> qCopy = copyQueueStr(q);
-		Queue<String> qHelp = new Queue<>();
-		String str;
-		boolean bool;
-		while(!qCopy.isEmpty()) {
-			str = qCopy.remove();
-			bool = isInStr(qHelp, str);
-			if (bool) {
-				return true;
-			}
-			qHelp.insert(str);
+        System.out.println("ex3:");
+        System.out.println(ex3(q1Copy));
 
-		}
-		return false;
-	}
+        q1Copy = copyQueueInt(q1);
+        System.out.println("ex4:");
+        System.out.println(ex4(q1Copy));
 
+        System.out.println("findMax:");
+        System.out.println(findMax(q1));
 
-	public static Queue<Integer> ex3(Queue<Integer> q) {
-		Queue<Integer> result = new Queue<>();
-		Set<Integer> seen = new HashSet<>();
+        System.out.println("numOfDigits:");
+        System.out.println(numOfDigits(4567));
 
-		while (!q.isEmpty()) {
-			int current = q.remove();
-			if (!seen.contains(current)) {
-				result.insert(current);
-				seen.add(current);
-			}
-		}
+        System.out.println("placeOfNum:");
+        System.out.println(placeOfNum(1234, 0));
 
-		return result;
-	}
+        BinNode<Integer> root = new BinNode<>(4);
+        root.setLeft(new BinNode<>(3));
+        root.setRight(new BinNode<>(5));
+        root.getLeft().setLeft(new BinNode<>(1));
+        root.getLeft().setRight(new BinNode<>(7));
 
+        System.out.println("printPositiveNoEvenChildren:");
+        printPositiveNoEvenChildren(root);
 
-	public static Queue<Integer> ex4(Queue<Integer> q) {
-		Queue<Integer> sortedQueue = new Queue<>();
-		Queue<Integer> tempQueue = new Queue<>();
+        System.out.println("printPositiveNoEvenChildren1:");
+        System.out.println(printPositiveNoEvenChildren1(root, 0));
 
-		while (!q.isEmpty()) {
-			int min = q.remove();
+        System.out.println("countNodes:");
+        System.out.println(countNodes(root));
 
-			while (!q.isEmpty()) {
-				int current = q.remove();
-				if (current < min) {
-					tempQueue.insert(min);
-					min = current;
-				} else {
-					tempQueue.insert(current);
-				}
-			}
-
-			sortedQueue.insert(min);
-
-			while (!tempQueue.isEmpty()) {
-				q.insert(tempQueue.remove());
-			}
-		}
-
-		return sortedQueue;
-	}
-
-
-
-	public static Queue<Integer> copyQueueInt(Queue<Integer> q) {
-		Queue<Integer> qNew = new Queue<>();
-		Queue<Integer> temp = new Queue<>();
-
-		while(!q.isEmpty()) {
-			int num = q.remove();
-			qNew.insert(num);
-			temp.insert(num);
-		}
-
-		while(!temp.isEmpty()) {
-			q.insert(temp.remove());
-		}
-
-		return qNew;
-	}
-
-	public static Queue<String> copyQueueStr(Queue<String> q) {
-		Queue<String> qNew = new Queue<>();
-		Queue<String> temp = new Queue<>();
-
-		while(!q.isEmpty()) {
-			String num = q.remove();
-			qNew.insert(num);
-			temp.insert(num);
-		}
-
-		while(!temp.isEmpty()) {
-			q.insert(temp.remove());
-		}
-
-		return qNew;
-	}
-
-	public static boolean isInStr(Queue<String> q, String num) {
-		Queue<String> qCopy = copyQueueStr(q);
-		int count = 0;
-		while(!qCopy.isEmpty()) {
-			if (qCopy.remove() == num) {
-				count++;
-			} else {
-				count = 0;
-			}
-			if (count > 1) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static int findMax(Queue<Integer> q) {
-		Queue<Integer> qCopy = copyQueueInt(q);
-		int max = 0;
-		int num;
-		while(!qCopy.isEmpty()) {
-			num = qCopy.remove();
-			if (num > max) {
-				max = num;
-			}
-		}
-
-		return max;
-	}
-	
-	public static int numOfDigits(int num){
-	    int result = (int)Math.log10(num) + 1;
-	    return result;
-	}
-	
-    public static int placeOfNum(int num, int place){
-        for (int i = 0; i < place; i++) {
-            num = num / 10;
-        }
-        return (num % 10);
+        System.out.println("printPositiveNoEvenChildren2:");
+        System.out.println(printPositiveNoEvenChildren2(root));
     }
 
+    public static Queue<Integer> ex1(Queue<String> q) {
+        Queue<String> qCopy = copyQueueStr(q);
+        Queue<Integer> c = new LinkedList<>();
+        int count = 1;
+        String current;
+        String prev = null;
 
+        while (!qCopy.isEmpty()) {
+            current = qCopy.poll();
+            if (current.equals(prev)) {
+                count++;
+            } else {
+                if (prev != null) {
+                    c.add(count);
+                }
+                count = 1;
+            }
+            prev = current;
+        }
+        c.add(count);
+        return c;
+    }
 
+    public static boolean ex2(Queue<String> q) {
+        Queue<String> qCopy = copyQueueStr(q);
+        Queue<String> qHelp = new LinkedList<>();
 
+        while (!qCopy.isEmpty()) {
+            String str = qCopy.poll();
+            if (isInStr(qHelp, str)) {
+                return true;
+            }
+            qHelp.add(str);
+        }
+        return false;
+    }
 
-	    public static void printPositiveNoEvenChildren(BinNode<Integer> node) {
+    public static Queue<Integer> ex3(Queue<Integer> q) {
+        Queue<Integer> result = new LinkedList<>();
+        Set<Integer> seen = new HashSet<>();
+
+        while (!q.isEmpty()) {
+            int current = q.poll();
+            if (!seen.contains(current)) {
+                result.add(current);
+                seen.add(current);
+            }
+        }
+        return result;
+    }
+
+    public static Queue<Integer> ex4(Queue<Integer> q) {
+        Queue<Integer> sortedQueue = new LinkedList<>();
+        Queue<Integer> tempQueue = new LinkedList<>();
+
+        while (!q.isEmpty()) {
+            int min = q.poll();
+
+            while (!q.isEmpty()) {
+                int current = q.poll();
+                if (current < min) {
+                    tempQueue.add(min);
+                    min = current;
+                } else {
+                    tempQueue.add(current);
+                }
+            }
+
+            sortedQueue.add(min);
+
+            while (!tempQueue.isEmpty()) {
+                q.add(tempQueue.poll());
+            }
+        }
+        return sortedQueue;
+    }
+
+    public static Queue<Integer> copyQueueInt(Queue<Integer> q) {
+        Queue<Integer> qNew = new LinkedList<>();
+        Queue<Integer> temp = new LinkedList<>();
+
+        while (!q.isEmpty()) {
+            int num = q.poll();
+            qNew.add(num);
+            temp.add(num);
+        }
+
+        while (!temp.isEmpty()) {
+            q.add(temp.poll());
+        }
+        return qNew;
+    }
+
+    public static Queue<String> copyQueueStr(Queue<String> q) {
+        Queue<String> qNew = new LinkedList<>();
+        Queue<String> temp = new LinkedList<>();
+
+        while (!q.isEmpty()) {
+            String num = q.poll();
+            qNew.add(num);
+            temp.add(num);
+        }
+
+        while (!temp.isEmpty()) {
+            q.add(temp.poll());
+        }
+        return qNew;
+    }
+
+    public static boolean isInStr(Queue<String> q, String num) {
+        Queue<String> qCopy = copyQueueStr(q);
+
+        while (!qCopy.isEmpty()) {
+            if (qCopy.poll().equals(num)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int findMax(Queue<Integer> q) {
+        Queue<Integer> qCopy = copyQueueInt(q);
+        int max = qCopy.poll();
+
+        while (!qCopy.isEmpty()) {
+            int num = qCopy.poll();
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+
+    public static int numOfDigits(int num) {
+        return (int) Math.log10(num) + 1;
+    }
+
+    public static int placeOfNum(int num, int place) {
+        for (int i = 0; i < place; i++) {
+            num /= 10;
+        }
+        return num % 10;
+    }
+
+    public static void printPositiveNoEvenChildren(BinNode<Integer> node) {
         if (node == null) {
             return;
         }
 
-        
-        if (node.getValue() > 0) {
-            
-            boolean leftIsEven = (node.hasLeft() && node.getLeft().getValue() % 2 == 0);
-            boolean rightIsEven = (node.hasRight() && node.getRight().getValue() % 2 == 0);
+        boolean leftIsEven = node.hasLeft() && node.getLeft().getValue() % 2 == 0;
+        boolean rightIsEven = node.hasRight() && node.getRight().getValue() % 2 == 0;
 
-            if (!leftIsEven && !rightIsEven && node.getValue() % 2 == 0) {
-                System.out.println(node.getValue());
-            }
+        if (node.getValue() > 0 && node.getValue() % 2 == 0 && !leftIsEven && !rightIsEven) {
+            System.out.println(node.getValue());
         }
+
         printPositiveNoEvenChildren(node.getLeft());
         printPositiveNoEvenChildren(node.getRight());
     }
 
-
-
-		public static int printPositiveNoEvenChildren1(BinNode<Integer> node, count) {
+    public static int printPositiveNoEvenChildren1(BinNode<Integer> node, int count) {
         if (node == null) {
-            return;
+            return count;
         }
 
-        
-        if (node.getValue() > 0) {
-            
-            boolean leftIsEven = (node.hasLeft() && node.getLeft().getValue() % 2 == 0);
-            boolean rightIsEven = (node.hasRight() && node.getRight().getValue() % 2 == 0);
+        boolean leftIsEven = node.hasLeft() && node.getLeft().getValue() % 2 == 0;
+        boolean rightIsEven = node.hasRight() && node.getRight().getValue() % 2 == 0;
 
-            if (!leftIsEven && !rightIsEven && node.getValue() % 2 == 0) {
-                count = count + 1;
-            }
+        if (node.getValue() > 0 && node.getValue() % 2 == 0 && !leftIsEven && !rightIsEven) {
+            count++;
         }
-        printPositiveNoEvenChildren1(node.getLeft(), count);
-        printPositiveNoEvenChildren1(node.getRight(), count);
+
+        count = printPositiveNoEvenChildren1(node.getLeft(), count);
+        count = printPositiveNoEvenChildren1(node.getRight(), count);
+        return count;
     }
-
-
-	public static boolean printPositiveNoEvenChildren2(BinNode<Integer> node)
-		int num = printPositiveNoEvenChildren1(node, 0);
-		if(num == 0){
-			return false;
-		}
-		retutn true;
-	}
-
-
-
 
     public static int countNodes(BinNode<Integer> node) {
         if (node == null) {
@@ -257,16 +245,33 @@ public class Main {
         return 1 + countNodes(node.getLeft()) + countNodes(node.getRight());
     }
 
-
-	public static boolean printPositiveNoEvenChildren2(BinNode<Integer> node)
-		int num = printPositiveNoEvenChildren1(node, 0);
-		int numOfItems = countNodes(node);
-
-		if(num == numOfItems){
-			return true;
-		}
-			retutn false;
-		}
-
-
+    public static boolean printPositiveNoEvenChildren2(BinNode<Integer> node) {
+        int num = printPositiveNoEvenChildren1(node, 0);
+        int total = countNodes(node);
+        return num == total;
+    }
+    
+    public static int countLeaves(BinNode<Integer> node) {
+        if (node == null) {
+            return 0;
+        }
+        int num = 0;
+        if (!node.hasRight() && !node.hasLeft()){
+            num = 1;
+        } 
+        return num + countNodes(node.getLeft()) + countNodes(node.getRight());
+    }
+    
+        public static int countDualLeaves(BinNode<Integer> node) {
+        if (node == null) {
+            return 0;
+        }
+        int num = 0;
+        if (!node.hasRight() && !node.hasLeft()){
+            if (node.getValue() % 2 == 0){ 
+                num = 1;
+            }    
+        } 
+        return num + countNodes(node.getLeft()) + countNodes(node.getRight());
+    }
 }
