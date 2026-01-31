@@ -47,6 +47,7 @@ public class Main {
         root.setRight(new BinNode<>(5));
         root.getLeft().setLeft(new BinNode<>(1));
         root.getLeft().setRight(new BinNode<>(7));
+        System.out.println(root);
 
         System.out.println("printPositiveNoEvenChildren:");
         printPositiveNoEvenChildren(root);
@@ -59,6 +60,10 @@ public class Main {
 
         System.out.println("printPositiveNoEvenChildren2:");
         System.out.println(printPositiveNoEvenChildren2(root));
+        
+        System.out.println("ex12 " + ex12(root));
+        System.out.println("ex16 " + ex16(root));
+        System.out.println("ex17 " + ex17(root));
     }
 
     public static Queue<Integer> ex1(Queue<String> q) {
@@ -293,6 +298,60 @@ public class Main {
             if(num == 0){
                 return true;
             }
+            return false;
+        }
+        
+        public static int ex12(BinNode<Integer> node){
+            if (node == null){
+                return 0;
+            }
+            if (node.hasLeft() || node.hasRight()){
+                if (node.getValue() >= 10 && node.getValue() < 100){
+                    return 1 + ex12(node.getLeft()) + ex12(node.getRight());
+                }
+                else{
+                    return 0 + ex12(node.getLeft()) + ex12(node.getRight());
+                }
+            }else{
+                return 0;
+            }
+            
+        }
+        
+        public static int ex16(BinNode<Integer> node){
+            if (node == null){
+                return 0;
+            }
+            
+            int num = 0;
+            if(node.hasRight() && node.hasLeft()){
+                num = node.getValue();  
+            }
+            
+            return num + ex16(node.getRight()) + ex16(node.getLeft());
+        }
+        
+        
+        
+        public static int ex17(BinNode<Integer> node){
+            if(node == null){
+                return 0;
+            }
+            int num = 0;    
+            if(node.hasRight() && node.hasLeft()){
+                if (checkIfLeaf(node.getLeft()) && checkIfLeaf(node.getRight())){
+                    num = 1;
+                }
+                
+            }
+            
+            return num + ex17(node.getRight()) + ex17(node.getLeft());
+        }
+        
+        public static boolean checkIfLeaf(BinNode<Integer> node){
+            if (node.hasLeft() || node.hasRight()){
+                return true;
+            } 
             return false;
         }
                 
